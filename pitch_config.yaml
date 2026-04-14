@@ -1,0 +1,55 @@
+# Investor Relations MCP - Pitch Configuration
+# Fill this in with your company's specifics.
+# This file is the source of truth for pitch positioning and global objection rebuttals.
+
+company_name: "Your Company"
+raise_amount: "$500K"
+raise_description: "seed round"
+
+# Pipeline stages (customize order/labels as needed)
+pipeline_stages:
+  - not_contacted
+  - outreach_sent
+  - response_received
+  - meeting_scheduled
+  - pitched
+  - decision_pending
+  - committed
+  - passed
+
+# Pitch positioning — used in investor_prep tool
+# Each key is a topic Claude can pull when preparing for a meeting.
+pitch_positioning:
+  market: >
+    Describe the market size and why now. e.g. "$3B TAM, under-digitized,
+    first-mover advantage."
+  model: >
+    How you make money. e.g. "Managed marketplace at 30-40% take rate with
+    full price transparency."
+  traction: >
+    Your best proof point. e.g. "Enterprise client live, X events in month 1."
+  ai_angle: >
+    How AI fits in — augmentation or core product.
+  team: >
+    Founder backgrounds and why you're the right team for this.
+  ask: >
+    Amount, use of funds, runway, and what success looks like at end of period.
+  differentiation: >
+    Who you're NOT competing with and why that matters.
+  never_say: >
+    Framings to avoid in pitches. e.g. "Never position as cheaper than X —
+    your pricing model contradicts it."
+
+# Global objections and rebuttals — seeded into DB on first run.
+# Add as many as you want. Format: [objection, rebuttal]
+global_objections:
+  - - "The market is too small / too risky"
+    - "Explain your TAM and why first-mover advantage offsets the risk."
+  - - "Why not just use [existing tool]?"
+    - "Explain the specific gap that existing tools don't cover and why."
+  - - "How do you defend against incumbents adding this feature?"
+    - "Your moat is operational/data, not just software. Explain why."
+  - - "Your take rate seems high"
+    - "Explain what the take rate covers and why customers pay it willingly."
+  - - "What's the exit path?"
+    - "Strategic acquisition by X, or grow to regional leader and IPO path."
