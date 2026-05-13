@@ -17,11 +17,23 @@ Built for founders raising a seed round who want to manage their pipeline conver
 
 ## Install
 
+Open Claude Code, paste:
+
+    /plugin marketplace add adelaidasofia/investor-relations-mcp
+    /plugin install investor-relations-mcp@investor-relations-mcp
+
+Then fill in `pitch_config.yaml` with your company's pitch positioning and global objections (drives the `investor_prep` tool), set `INVESTOR_MCP_VAULT_CRM` to your CRM folder, restart Claude Code, and run:
+
+> "Run investor_sync"
+> "Show me my investor pipeline"
+> "Prep me for my meeting with [name]"
+
+<details>
+<summary>Legacy install</summary>
+
 ```bash
 pip install fastmcp pyyaml python-frontmatter
 ```
-
-## Setup
 
 1. Clone:
    ```bash
@@ -45,6 +57,8 @@ pip install fastmcp pyyaml python-frontmatter
    > "Run investor_sync"
    > "Show me my investor pipeline"
    > "Prep me for my meeting with [name]"
+
+</details>
 
 ## CRM file format
 
@@ -125,4 +139,4 @@ MIT
 
 ---
 
-Built by Adelaida Diaz-Roa. Full install or team version at [diazroa.com](https://diazroa.com).
+Built by [Mycelium AI](https://myceliumai.co).
