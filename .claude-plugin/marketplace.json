@@ -1,0 +1,15 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "investor-relations-mcp",
+  "owner": {
+    "name": "Mycelium AI",
+    "url": "https://myceliumai.co"
+  },
+  "plugins": [
+    {
+      "name": "investor-relations-mcp",
+      "source": "./",
+      "description": "FastMCP server for tracking a seed raise investor pipeline from Claude Code. Syncs from Obsidian vault CRM files, generates meeting prep documents, tracks interactions, and monitors follow-up compliance."
+    }
+  ]
+}

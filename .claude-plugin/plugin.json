@@ -1,0 +1,9 @@
+{
+  "name": "investor-relations-mcp",
+  "description": "FastMCP server for tracking a seed raise investor pipeline from Claude Code. Syncs from Obsidian vault CRM files, generates meeting prep documents, tracks interactions, and monitors follow-up compliance.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Mycelium AI",
+    "url": "https://myceliumai.co"
+  }
+}
