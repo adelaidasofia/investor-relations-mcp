@@ -16,6 +16,7 @@
       "transport": {
         "type": "stdio"
       },
+      "fileSha256": "a789bdca0b51faf2a156fbccc2520d2a94e6d9aef4960d47ed3bcf5a2f18d88d",
       "environmentVariables": [
         {
           "name": "VAULT_CRM_PATH",
