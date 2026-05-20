@@ -1,0 +1,57 @@
+{
+  "manifest_version": "0.4",
+  "name": "investor-relations-mcp",
+  "display_name": "FastMCP seed raise pipeline tracker \u2014 syncs from Obsidian CRM, generates meeting",
+  "version": "0.1.0",
+  "description": "FastMCP seed raise pipeline tracker \u2014 syncs from Obsidian CRM, generates meeting prep, tracks follow-up compliance.",
+  "author": {
+    "name": "Adelaida Diaz-Roa",
+    "url": "https://github.com/adelaidasofia"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adelaidasofia/investor-relations-mcp.git"
+  },
+  "homepage": "https://github.com/adelaidasofia/investor-relations-mcp",
+  "documentation": "https://github.com/adelaidasofia/investor-relations-mcp#readme",
+  "support": "https://github.com/adelaidasofia/investor-relations-mcp/issues",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "fastmcp",
+    "investor-relations"
+  ],
+  "server": {
+    "type": "python",
+    "entry_point": "server.py",
+    "mcp_config": {
+      "command": "python3",
+      "args": [
+        "${__dirname}/server.py"
+      ],
+      "env": {
+        "VAULT_CRM_PATH": "${user_config.vault_crm_path}"
+      }
+    }
+  },
+  "tools_generated": true,
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ]
+  },
+  "user_config": {
+    "vault_crm_path": {
+      "type": "string",
+      "title": "Vault CRM folder",
+      "description": "Absolute path to your CRM/ folder in the Obsidian vault",
+      "required": true,
+      "sensitive": false
+    }
+  }
+}
