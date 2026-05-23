@@ -1,5 +1,20 @@
 # investor-relations-mcp
 
+
+<!-- mycelium-badges:start -->
+
+<p>
+  <a href="https://github.com/adelaidasofia/investor-relations-mcp/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/adelaidasofia/investor-relations-mcp?color=blue"></a>
+  <a href="https://github.com/adelaidasofia/investor-relations-mcp/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/adelaidasofia/investor-relations-mcp?color=eab308"></a>
+  <a href="https://github.com/adelaidasofia/investor-relations-mcp/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/adelaidasofia/investor-relations-mcp"></a>
+  <a href="https://github.com/adelaidasofia/investor-relations-mcp/issues"><img alt="Open issues" src="https://img.shields.io/github/issues/adelaidasofia/investor-relations-mcp"></a>
+  <a href="https://pypi.org/project/adelaidasofia-investor-relations-mcp/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/adelaidasofia-investor-relations-mcp?color=blue&label=pypi"></a>
+  <a href="https://pypi.org/project/adelaidasofia-investor-relations-mcp/"><img alt="PyPI downloads" src="https://img.shields.io/pypi/dm/adelaidasofia-investor-relations-mcp?color=blue&label=downloads"></a>
+  <a href="https://myceliumai.co"><img alt="Built by Mycelium AI" src="https://img.shields.io/badge/built_by-Mycelium_AI-15B89A"></a>
+</p>
+
+<!-- mycelium-badges:end -->
+
 A FastMCP server for tracking your seed raise investor pipeline from Claude Code. Syncs from Obsidian vault CRM files, generates meeting prep documents, tracks interactions, and monitors follow-up compliance.
 
 Built for founders raising a seed round who want to manage their pipeline conversationally without switching to a separate CRM.
