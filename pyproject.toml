@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=82.0.1", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "investor-relations-mcp"
+version = "0.1.0"
+description = "FastMCP server for investor-relations workflows over a markdown vault."
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp>=3.4.2",
+    "pyyaml>=6.0.3",
+    "python-frontmatter>=1.3.0",
+]
+
+# Flat layout (modules at repo root). List them explicitly so the editable
+# build is deterministic and setuptools does not fail discovery with
+# "Multiple top-level modules discovered in a flat-layout".
+[tool.setuptools]
+py-modules = ["server"]
