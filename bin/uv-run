@@ -1,0 +1,77 @@
+#!/bin/sh
+# Runs a command inside this server's own Python environment, built by uv
+# from pyproject.toml + uv.lock. Used by .mcp.json, so a plugin install needs
+# nothing preinstalled: if uv is missing, a pinned, checksum-verified uv is
+# downloaded once, and uv fetches a Python that meets requires-python.
+#
+#   sh bin/uv-run python server.py
+#
+# Everything this script prints goes to stderr: stdout is the MCP channel.
+set -eu
+
+ROOT=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
+
+# Plugin installs: keep the environment and the downloaded uv in the plugin's
+# data folder (survives updates, keeps the plugin cache read-only).
+# Clones: the usual .venv in the repo.
+if [ -n "${CLAUDE_PLUGIN_DATA:-}" ]; then
+  export UV_PROJECT_ENVIRONMENT="$CLAUDE_PLUGIN_DATA/venv"
+  UV_HOME="$CLAUDE_PLUGIN_DATA/uv"
+else
+  UV_HOME="${XDG_CACHE_HOME:-$HOME/.cache}/mycelium-mcp/uv"
+fi
+
+UV_VERSION=0.13.5
+
+find_uv() {
+  if command -v uv >/dev/null 2>&1; then command -v uv; return 0; fi
+  for c in "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv" "/opt/homebrew/bin/uv" "/usr/local/bin/uv" "$UV_HOME/uv"; do
+    if [ -x "$c" ]; then echo "$c"; return 0; fi
+  done
+  return 1
+}
+
+install_uv() {
+  case "$(uname -s)-$(uname -m)" in
+    Darwin-arm64)  t=aarch64-apple-darwin;       sum=743f85035a1996ecb350659e01cd9faea9709829be09b1b4b03c73eaf3c9cd73 ;;
+    Darwin-x86_64) t=x86_64-apple-darwin;        sum=b0f52b0e3945b4107d89024ea38e625683011fbfc05a0d98f9fa2d6dcee28c66 ;;
+    Linux-aarch64|Linux-arm64) t=aarch64-unknown-linux-musl; sum=7906c79adb21c81abd559841ba76bb1d9af9d791acac7a041b2972e03ae16538 ;;
+    Linux-x86_64)  t=x86_64-unknown-linux-musl;  sum=57ef9d9ccb01fb1bd998df995b0dd221b52f7d7841fbea93f2d4463bf61fb7a9 ;;
+    *) echo "uv-run: no pinned uv for $(uname -s)-$(uname -m). Install uv (https://docs.astral.sh/uv/) and restart Claude Code." >&2; exit 1 ;;
+  esac
+  tmp=$(mktemp -d)
+  trap 'rm -rf "$tmp"' EXIT
+  echo "uv-run: downloading uv $UV_VERSION ($t), first start only" >&2
+  curl -fsSL --retry 2 -o "$tmp/uv.tar.gz" "https://github.com/astral-sh/uv/releases/download/$UV_VERSION/uv-$t.tar.gz" >&2
+  if command -v shasum >/dev/null 2>&1; then
+    got=$(shasum -a 256 "$tmp/uv.tar.gz" | cut -d' ' -f1)
+  else
+    got=$(sha256sum "$tmp/uv.tar.gz" | cut -d' ' -f1)
+  fi
+  if [ "$got" != "$sum" ]; then
+    echo "uv-run: checksum mismatch for the uv download, refusing to run it" >&2
+    exit 1
+  fi
+  tar -xzf "$tmp/uv.tar.gz" -C "$tmp"
+  mkdir -p "$UV_HOME"
+  mv "$tmp/uv-$t/uv" "$UV_HOME/uv"
+  rm -rf "$tmp"
+  trap - EXIT
+}
+
+UV=$(find_uv) || { install_uv; UV="$UV_HOME/uv"; }
+
+# Build (or refresh) the environment in its own process with its own log.
+# Claude Code stops waiting for a server after 30 seconds. On a slow
+# connection the first build can take longer; when Claude Code gives up and
+# stops this script, the build keeps going, so the next start is quick
+# instead of starting the download over.
+mkdir -p "$UV_HOME"
+nohup "$UV" sync --quiet --frozen --no-dev --project "$ROOT" \
+  </dev/null >"$UV_HOME/last-sync.log" 2>&1 &
+if ! wait $!; then
+  cat "$UV_HOME/last-sync.log" >&2
+  exit 1
+fi
+
+exec "$UV" run --quiet --frozen --no-dev --no-sync --project "$ROOT" "$@"
