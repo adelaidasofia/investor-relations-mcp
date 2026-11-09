@@ -46,10 +46,6 @@ Then fill in `pitch_config.yaml` with your company's pitch positioning and globa
 <details>
 <summary>Legacy install</summary>
 
-```bash
-pip install fastmcp pyyaml python-frontmatter
-```
-
 1. Clone:
    ```bash
    git clone https://github.com/adelaidasofia/investor-relations-mcp.git
@@ -65,7 +61,7 @@ pip install fastmcp pyyaml python-frontmatter
 
 4. Register with Claude Code:
    ```bash
-   claude mcp add investor-relations -s user -- python3 /path/to/investor-relations-mcp/server.py
+   claude mcp add investor-relations -s user -- sh /path/to/investor-relations-mcp/bin/uv-run python /path/to/investor-relations-mcp/server.py
    ```
 
 5. Restart Claude Code, then sync your CRM:
